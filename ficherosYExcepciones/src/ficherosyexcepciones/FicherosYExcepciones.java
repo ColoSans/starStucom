@@ -26,6 +26,7 @@ public class FicherosYExcepciones {
      * @param args the command line arguments
      */
     private static ArrayList<Planeta> planetas = new ArrayList<>();
+    private static ArrayList<Ciudadano> ciudadanos = new ArrayList<>();
 //    public static ArrayList<Ciudadano> ciudadanos = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -114,10 +115,13 @@ public class FicherosYExcepciones {
             case "vulcan":
                 for(int i=0;i<planetas.size();i++){
                     if(arrayLinea[2].equals(planetas.get(i).getNombre())){
-                        System.out.println(planetas.get(i).getNombre());
-                        
+                        if(arrayLinea[3].equals(ciudadanos.get(i).getNombre())){
+                            
+                        }else{
+                            System.out.println("< ERROR 006: Ya existe un ser censado con ese nombre >");
+                        }
                     }else{
-                        
+                        System.out.println("< ERROR 003: Planeta incorrecto >");
                     }
                 }
                 break;
@@ -133,4 +137,23 @@ public class FicherosYExcepciones {
         }
         
     }
+    
+    
+//        public static boolean planetaxplaneta(String[] arrayLinea){
+//        for(int i=0;i<planetas.size();i++){
+//            if(arrayLinea[2].equals(planetas.get(i).getNombre())){
+//                if(arrayLinea[3].equals(ciudadanos.get(i).getNombre())){
+//                    return true;
+//                }else{
+//                    System.out.println("< ERROR 006: Ya existe un ser censado con ese nombre >");
+//                    return false;
+//                }
+//                }else{
+//                    System.out.println("< ERROR 003: Planeta incorrecto >");
+//                    return false;
+//                }
+//                    
+//            }
+//        return false;
+//    }
 }
