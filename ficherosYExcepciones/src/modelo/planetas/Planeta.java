@@ -38,6 +38,9 @@ public class Planeta {
         this.nombre = nombre;
     }
 
+    public void comprobarCiudadano(Ciudadano c) throws MyException {
+        
+    }
     public ArrayList<Ciudadano> getHabitantes() {
         return habitantes;
     }

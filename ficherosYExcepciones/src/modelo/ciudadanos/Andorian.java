@@ -12,30 +12,30 @@ import exceptions.MyException;
  * @author marcc
  */
 public class Andorian extends Ciudadano  {
-    private boolean aenar;
+    private String aenar;
 
     public Andorian (String aenar, String nombre)throws MyException {
         
         super(nombre);
         if(aenar.equalsIgnoreCase("aenar")){
-            this.aenar = true;
+            this.aenar = aenar;
         }else if(aenar.equalsIgnoreCase("noaenar")){
-            this.aenar = false;
+            this.aenar = aenar;
         }else{
             throw new MyException("< ERROR 004: Dato incorrecto >");
         }
         
     }
 
-    public boolean isAenar() {
+    public String getAenar() {
         return aenar;
     }
 
     public void setAenar(String aenar) throws MyException{
         if(aenar.equalsIgnoreCase("aenar")){
-            this.aenar = true;
+            this.aenar = aenar;
         }else if(aenar.equalsIgnoreCase("noaenar")){
-            this.aenar = false;
+            this.aenar = aenar;
         }else{
             throw new MyException("< ERROR 004: Dato incorrecto >");
         }

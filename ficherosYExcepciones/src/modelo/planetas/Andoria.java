@@ -29,6 +29,7 @@ public class Andoria extends Planeta{
         this.noBienvenido = noBienvenido;
     }
     
+    @Override
      public void comprobarCiudadano(Ciudadano c) throws MyException {
         if(c.getClass().getSimpleName().equalsIgnoreCase("Vulcan")){
              throw new MyException("< ERROR 005: No se puede registrar ese ser en ese planeta >");

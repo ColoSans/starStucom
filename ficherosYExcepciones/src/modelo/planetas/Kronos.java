@@ -5,6 +5,9 @@
  */
 package modelo.planetas;
 
+import exceptions.MyException;
+import modelo.ciudadanos.Ciudadano;
+
 /**
  *
  * @author marcc
@@ -14,8 +17,7 @@ public class Kronos extends Planeta{
 
     public Kronos(int nHabitantes, String nombre) {
         super(nombre);
-        this.nHabitantes = nHabitantes;
-        nHabitantes++;
+        this.nHabitantes = 30;
     }
 
     public int getnHabitantes() {
@@ -24,5 +26,10 @@ public class Kronos extends Planeta{
 
     public void setnHabitantes(int nHabitantes) {
         this.nHabitantes = nHabitantes;
+    }
+    public void comprobarCiudadano(Ciudadano c) throws MyException {
+        if(getHabitantes().size()==nHabitantes){
+             throw new MyException("< ERROR 005: No se puede registrar ese ser en ese planeta >");
+        }
     }
 }
