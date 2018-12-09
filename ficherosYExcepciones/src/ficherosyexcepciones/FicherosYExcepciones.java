@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ciudadanos.*;
@@ -84,7 +86,7 @@ public class FicherosYExcepciones {
                                 break;
                             case "l":
                                 if (arrayLinea.length == 1) {
-                                    
+                                    listarHabitantes();
                                 } else {
                                     throw new MyException("< ERROR 001: N.º de argumentos inválido >");
                                 }
@@ -104,7 +106,23 @@ public class FicherosYExcepciones {
     }
     
     
-    
+     public static void listarHabitantes() {
+             System.out.println("< POPULATION BY PLANET");
+             Comparator<Ciudadano> comparadorNombre = Comparator.comparing(Ciudadano -> Ciudadano.getClass().getSimpleName());
+             comparadorNombre = comparadorNombre.thenComparing(Comparator.comparing(Ciudadano -> Ciudadano.getNombre()));
+            
+             for (Planeta planeta : planetas) {
+
+            System.out.println("< " + planeta.getNombre() + " >");
+            Collections.sort(planeta.getHabitantes(), comparadorNombre);
+
+            for (Ciudadano Ciudadano : planeta.getHabitantes()) {
+                System.out.println(Ciudadano.toString());
+            }
+
+        }
+
+     }
     public static void crearPlanetas() {
         Planeta vulcano = new Vulcano("vulcano");
         Planeta andoria = new Andoria("andoria");
