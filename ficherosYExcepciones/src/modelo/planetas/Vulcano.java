@@ -33,8 +33,6 @@ public class Vulcano extends Planeta{
     public void comprobarCiudadano(Ciudadano c) throws MyException {
         if(c.getClass().getSimpleName().equalsIgnoreCase("Klingon") || c.getClass().getSimpleName().equalsIgnoreCase("Andorian")){
              throw new MyException("< ERROR 005: No se puede registrar ese ser en ese planeta >");
-        }else{
-            getHabitantes().add(c);
         }
         
     }

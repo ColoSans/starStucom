@@ -13,7 +13,7 @@ import exceptions.MyException;
  */
 public class Nibirian extends Ciudadano {
     
-    private boolean alimento;
+    private String alimento;
     /**
      * Constructor
      * @param alimento alimento puede ser true o false
@@ -22,9 +22,9 @@ public class Nibirian extends Ciudadano {
     public Nibirian(String alimento, String nombre) throws MyException {
         super(nombre);
          if(alimento.equalsIgnoreCase("vegetarian")){
-             this.alimento = false;
+             this.alimento = alimento;
          }else if(alimento.equalsIgnoreCase("novegetarian")){
-             this.alimento = true;
+             this.alimento = alimento;
          }else{
              throw new MyException("< ERROR 004: Dato incorrecto >");
          }
@@ -34,21 +34,24 @@ public class Nibirian extends Ciudadano {
  * devuelve el valor de alimento
  * @return 
  */
-    public boolean isAlimento() {
+    public String getAlimento() {    
         return alimento;
     }
+
 /**
- * modifica el valor de alimento
- * @param alimento 
- */
+     * modifica el valor de alimento
+     * @param alimento
+     */
     public void setAlimento(String alimento) throws MyException {
         if(alimento.equalsIgnoreCase("vegetarian")){
-             this.alimento = false;
-         }else if(alimento.equalsIgnoreCase("novegetarian")){
-             this.alimento = true;
-         }else{
+            this.alimento = alimento;
+        }else if(alimento.equalsIgnoreCase("novegetarian")){
+            this.alimento = alimento;
+        }else{
             throw new MyException("< ERROR 004: Dato incorrecto >");
-         }
+        }
     }
-    
+    public String toString() {
+        return "nibirian-"+ super.toString()+"-"+alimento; 
+    }
 }

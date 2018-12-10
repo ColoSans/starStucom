@@ -36,5 +36,7 @@ public class Human extends Ciudadano{
             this.edad = edad;
         }
     }
-    
+    public String toString() {
+        return "human-"+ super.toString()+"-"+edad; 
+    }
 }

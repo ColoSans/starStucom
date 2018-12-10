@@ -35,4 +35,8 @@ public class Vulcan extends Ciudadano{
         }
     }
     
+       @Override
+    public String toString() {
+        return "vulcan-"+ super.toString()+"-"+meditacion; 
+    }
 }

@@ -60,19 +60,19 @@ public class FicherosYExcepciones {
                                     tryCiudadano(linea);
 
                                 } else {
-                                   throw new MyException("< ERROR 001: N.º de argumentos inválido >");
+                                    throw new MyException("< ERROR 001: N.º de argumentos inválido >");
                                 }
                                 break;
                             case "b":
                                 if (arrayLinea.length == 2) {
-
+                                    borrarCiudadano(linea);
                                 } else {
                                     throw new MyException("< ERROR 001: N.º de argumentos inválido >");
                                 }
                                 break;
                             case "m":
                                 if (arrayLinea.length == 3) {
-
+                                    modificar(linea);
                                 } else {
                                     throw new MyException("< ERROR 001: N.º de argumentos inválido >");
                                 }
@@ -104,25 +104,120 @@ public class FicherosYExcepciones {
             Logger.getLogger(FicherosYExcepciones.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-     public static void listarHabitantes() {
-             System.out.println("< POPULATION BY PLANET");
-             Comparator<Ciudadano> comparadorNombre = Comparator.comparing(Ciudadano -> Ciudadano.getClass().getSimpleName());
-             comparadorNombre = comparadorNombre.thenComparing(Comparator.comparing(Ciudadano -> Ciudadano.getNombre()));
-            
-             for (Planeta planeta : planetas) {
 
+    public static boolean isInteger(String dato) {
+        try {
+
+            Integer.parseInt(dato);
+
+        } catch (NumberFormatException e) {
+
+            return false;
+
+        } catch (NullPointerException e) {
+
+            return false;
+
+        }
+
+        return true;
+    }
+
+    public static void modificar(String linea) {
+
+        try {
+
+            String[] arrayLinea = linea.split(" ");
+            String nombreHabitante = arrayLinea[1];
+            String dato = arrayLinea[2];
+            if (isInteger(dato)) {
+                if (!comprobarNombre(nombreHabitante)) {
+                    for (Planeta planeta : planetas) {
+                        for (Ciudadano ciudadanos : planeta.getHabitantes()) {
+                            if (ciudadanos.getNombre().equalsIgnoreCase(nombreHabitante)) {
+                                switch (ciudadanos.getClass().getSimpleName().toLowerCase()) {
+
+                                    case "human":
+                                        Human humano = (Human) ciudadanos;
+                                        humano.setEdad(Integer.parseInt(dato));
+                                        System.out.println("< OK: Ser modificado correctamente >");
+                                        break;
+                                    case "vulcan":
+                                        Vulcan vulcan = (Vulcan) ciudadanos;
+                                        vulcan.setMeditacion(Integer.parseInt(dato));
+                                        System.out.println("< OK: Ser modificado correctamente >");
+                                        break;
+                                    case "klingon":
+                                        Klingon klingon = (Klingon) ciudadanos;
+                                        klingon.setFuerza(Integer.parseInt(dato));
+                                        System.out.println("< OK: Ser modificado correctamente >");
+                                        break;
+                                    default:
+                                        throw new MyException("< ERROR 008: El ser no permite ser modificado >");
+                                }
+                            }
+                        }
+                    }
+
+                } else {
+
+                    throw new MyException("< ERROR 007: No existe ningún ser con ese nombre >");
+
+                }
+            } else {
+
+                throw new MyException("< ERROR 004: Dato incorrecto >");
+
+            }
+        } catch (MyException ex) {
+
+            System.out.println(ex.getMessage());
+
+        }
+
+    }
+
+    public static void borrarCiudadano(String linea) {
+
+        try {
+
+            String[] arrayLinea = linea.split(" ");
+            String nombreHabitante = arrayLinea[1];
+
+            for (int i = 0; i < planetas.size(); i++) {
+                ArrayList<Ciudadano> habitantes = planetas.get(i).getHabitantes();
+                for (int a = 0; a < habitantes.size(); a++) {
+                    if (habitantes.get(a).getNombre().equalsIgnoreCase(nombreHabitante)) {
+                        habitantes.remove(a);
+                        System.out.println("<OK: Ser borrado correctamente >");
+                    }
+                }
+            }
+            //Elimina al habitante pero cuando acaba de recorrer el bucle saca por pantalla la excepcion
+            throw new MyException("< ERROR 007: No existe ningún ser con ese nombre >");
+        } catch (MyException ex) {
+            System.out.println(ex.getMessage());
+
+        }
+
+    }
+
+    public static void listarHabitantes() {
+        System.out.println("< POPULATION BY PLANET");
+        Comparator<Ciudadano> comparadorNombre = Comparator.comparing(Ciudadano -> Ciudadano.getClass().getSimpleName());
+        comparadorNombre = comparadorNombre.thenComparing(Comparator.comparing(Ciudadano -> Ciudadano.getNombre()));
+
+        for (Planeta planeta : planetas) {
             System.out.println("< " + planeta.getNombre() + " >");
             Collections.sort(planeta.getHabitantes(), comparadorNombre);
-
-            for (Ciudadano Ciudadano : planeta.getHabitantes()) {
-                System.out.println(Ciudadano.toString());
+            for (Ciudadano ciudadano : planeta.getHabitantes()) {
+                System.out.println(ciudadano);
             }
 
         }
 
-     }
+    }
+
     public static void crearPlanetas() {
         Planeta vulcano = new Vulcano("vulcano");
         Planeta andoria = new Andoria("andoria");
@@ -133,7 +228,7 @@ public class FicherosYExcepciones {
         planetas.add(andoria);
         planetas.add(vulcano);
     }
-    
+
     public static void tryCiudadano(String linea) throws MyException {
         String[] arrayLinea = linea.split(" ");
 
@@ -224,7 +319,7 @@ public class FicherosYExcepciones {
         }
         return true;
     }
-    
+
     // Método que le pases una Especie y un nombre de planeta
     // y aÑADE  una linea al fichero nombreplaneta.txt con los datos de la especie
 }

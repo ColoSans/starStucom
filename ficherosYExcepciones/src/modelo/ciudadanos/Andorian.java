@@ -40,5 +40,7 @@ public class Andorian extends Ciudadano  {
             throw new MyException("< ERROR 004: Dato incorrecto >");
         }
     }
-    
+    public String toString() {
+        return "andorian-"+ super.toString()+"-"+aenar; 
+    }
 }

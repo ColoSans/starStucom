@@ -25,6 +25,6 @@ public class Ciudadano {
     }
     @Override
     public String toString() {
-        return " - " + nombre; 
+        return nombre; 
     }
 }

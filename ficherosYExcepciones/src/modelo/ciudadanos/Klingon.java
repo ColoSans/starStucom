@@ -36,5 +36,7 @@ public class Klingon extends Ciudadano {
             throw new MyException("< ERROR 012: Valor de fuerza incorrecto >");
         }
     }
-    
+    public String toString() {
+        return "klingon-"+ super.toString()+"-"+fuerza; 
+    }
 }
