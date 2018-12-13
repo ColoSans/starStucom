@@ -17,7 +17,7 @@ public class Klingon extends Ciudadano {
     public Klingon(int fuerza, String nombre) throws MyException {
         
         super(nombre);
-        if(fuerza<50 || fuerza>350){
+        if(fuerza>50 || fuerza<350){
             this.fuerza = fuerza;
         }else{
             throw new MyException("< ERROR 012: Valor de fuerza incorrecto >");
@@ -30,7 +30,7 @@ public class Klingon extends Ciudadano {
     }
 
     public void setFuerza(int fuerza) throws MyException {
-        if(fuerza<50 || fuerza>350){
+        if(fuerza>50 || fuerza<350){
             this.fuerza = fuerza;
         }else{
             throw new MyException("< ERROR 012: Valor de fuerza incorrecto >");

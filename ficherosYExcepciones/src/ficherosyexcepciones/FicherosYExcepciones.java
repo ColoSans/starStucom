@@ -8,6 +8,7 @@ package ficherosyexcepciones;
 
 import exceptions.MyException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ciudadanos.*;
 import modelo.planetas.*;
-
+import persistencia.*;
 /**
  *
  * @author marcc
@@ -33,6 +34,8 @@ public class FicherosYExcepciones {
     public static void main(String[] args) {
         crearPlanetas();
         // cargar los datos de los fichero (leer)
+        persistencia();
+        
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String linea;
@@ -79,7 +82,7 @@ public class FicherosYExcepciones {
                                 break;
                             case "p":
                                 if (arrayLinea.length == 2) {
-
+                                    listaPorEspecie(linea);
                                 } else {
                                     throw new MyException("< ERROR 001: N.º de argumentos inválido >");
                                 }
@@ -105,6 +108,7 @@ public class FicherosYExcepciones {
         }
     }
 
+    
     public static boolean isInteger(String dato) {
         try {
 
@@ -131,7 +135,7 @@ public class FicherosYExcepciones {
             String nombreHabitante = arrayLinea[1];
             String dato = arrayLinea[2];
             if (isInteger(dato)) {
-                if (!comprobarNombre(nombreHabitante)) {
+                if (comprobarNombre(nombreHabitante)) {
                     for (Planeta planeta : planetas) {
                         for (Ciudadano ciudadanos : planeta.getHabitantes()) {
                             if (ciudadanos.getNombre().equalsIgnoreCase(nombreHabitante)) {
@@ -203,7 +207,7 @@ public class FicherosYExcepciones {
     }
 
     public static void listarHabitantes() {
-        System.out.println("< POPULATION BY PLANET");
+        System.out.println("< POPULATION BY PLANET >");
         Comparator<Ciudadano> comparadorNombre = Comparator.comparing(Ciudadano -> Ciudadano.getClass().getSimpleName());
         comparadorNombre = comparadorNombre.thenComparing(Comparator.comparing(Ciudadano -> Ciudadano.getNombre()));
 
@@ -231,64 +235,75 @@ public class FicherosYExcepciones {
 
     public static void tryCiudadano(String linea) throws MyException {
         String[] arrayLinea = linea.split(" ");
+        // si comprobarNombre - Lanzas excepcion, ya existe
+        if (!comprobarNombre(arrayLinea[3])) {
 
-        switch (arrayLinea[1]) {
-            case "vulcan":
-                int meditacion = Integer.parseInt(arrayLinea[4]);
-                if (comprobarPlaneta(arrayLinea[2]) && comprobarNombre(arrayLinea[3])) {
-                    Vulcan v = new Vulcan(meditacion, arrayLinea[3]);
-                    Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
-                    traerPlaneta.comprobarCiudadano(v);
-                    traerPlaneta.getHabitantes().add(v);
-                    // Guardar en fichero
-                    System.out.println("< OK: Ser censado correctamente en el planeta >");
-                }
-                break;
-            case "nibirian":
-                if (comprobarPlaneta(arrayLinea[2]) && comprobarNombre(arrayLinea[3])) {
-                    Nibirian n = new Nibirian(arrayLinea[4], arrayLinea[3]);
-                    //FALTA COMPROBAR QUE LOS VEGETARIANOS SOLO VIVAN EN NIBIRU
-                    Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
-                    traerPlaneta.comprobarCiudadano(n);
-                    // Guardar en fichero
-                    traerPlaneta.getHabitantes().add(n);
-                    System.out.println("< OK: Ser censado correctamente en el planeta >");
+            switch (arrayLinea[1]) {
+                case "vulcan":
+                    int meditacion = Integer.parseInt(arrayLinea[4]);
+                    if (comprobarPlaneta(arrayLinea[2])) {
+                        Vulcan v = new Vulcan(meditacion, arrayLinea[3]);
+                        Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
+                        traerPlaneta.comprobarCiudadano(v);
+                        traerPlaneta.getHabitantes().add(v);
+                        guardarHabitante(v, linea);// Guardar en fichero
+                        
+                        System.out.println("< OK: Ser censado correctamente en el planeta >");
+                    }
+                    break;
+                case "nibirian":
+                    if (comprobarPlaneta(arrayLinea[2])) {
+                        Nibirian n = new Nibirian(arrayLinea[4], arrayLinea[3]);
+                        //FALTA COMPROBAR QUE LOS VEGETARIANOS SOLO VIVAN EN NIBIRU
+                        Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
+                        traerPlaneta.comprobarCiudadano(n);
+                        guardarHabitante(n, linea);// Guardar en fichero
+                        traerPlaneta.getHabitantes().add(n);
+                        
+                        System.out.println("< OK: Ser censado correctamente en el planeta >");
 
-                }
-                break;
-            case "andorian":
-                if (comprobarPlaneta(arrayLinea[2]) && comprobarNombre(arrayLinea[3])) {
-                    Andorian a = new Andorian(arrayLinea[4], arrayLinea[3]);
-                    Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
-                    traerPlaneta.comprobarCiudadano(a);
-                    // Guardar en fichero
-                    traerPlaneta.getHabitantes().add(a);
-                    System.out.println("< OK: Ser censado correctamente en el planeta >");
-                }
-                break;
-            case "human":
-                if (comprobarPlaneta(arrayLinea[2]) && comprobarNombre(arrayLinea[3])) {
-                    Human h = new Human(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
-                    Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
-                    traerPlaneta.comprobarCiudadano(h);
-                    // Guardar en fichero
-                    traerPlaneta.getHabitantes().add(h);
-                    System.out.println("< OK: Ser censado correctamente en el planeta >");
-                }
-                break;
-            case "klingon":
-                if (comprobarPlaneta(arrayLinea[2]) && comprobarNombre(arrayLinea[3])) {
-                    Klingon k = new Klingon(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
-                    Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
-                    traerPlaneta.comprobarCiudadano(k);
-                    // Guardar en fichero
-                    traerPlaneta.getHabitantes().add(k);
-                    System.out.println("< OK: Ser censado correctamente en el planeta >");
-                }
-                break;
-            default:
-                throw new MyException("< ERROR 002: Especie incorrecta >");
+                    }
+                    break;
+                case "andorian":
+                    if (comprobarPlaneta(arrayLinea[2])) {
+                        Andorian a = new Andorian(arrayLinea[4], arrayLinea[3]);
+                        Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
+                        traerPlaneta.comprobarCiudadano(a);
+                        guardarHabitante(a, linea);// Guardar en fichero
+                        traerPlaneta.getHabitantes().add(a);
+                        
+                        System.out.println("< OK: Ser censado correctamente en el planeta >");
+                    }
+                    break;
+                case "human":
+                    if (comprobarPlaneta(arrayLinea[2])) {
+                        Human h = new Human(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
+                        Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
+                        traerPlaneta.comprobarCiudadano(h);
+                        guardarHabitante(h, linea);// Guardar en fichero
+                        traerPlaneta.getHabitantes().add(h);
+                        
+                        System.out.println("< OK: Ser censado correctamente en el planeta >");
+                    }
+                    break;
+                case "klingon":
+                    if (comprobarPlaneta(arrayLinea[2])) {
+                        Klingon k = new Klingon(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
+                        Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
+                        traerPlaneta.comprobarCiudadano(k);
+                        guardarHabitante(k, linea);// Guardar en fichero
+                        traerPlaneta.getHabitantes().add(k);
+                        
+                        System.out.println("< OK: Ser censado correctamente en el planeta >");
+                    }
+                    break;
+                default:
+                    throw new MyException("< ERROR 002: Especie incorrecta >");
+            }
+        } else {
+            throw new MyException("< ERROR 006: Ya existe un ser censado con ese nombre >");
         }
+
     }
 
     public static Planeta traerPlaneta(String planeta) throws MyException {
@@ -313,13 +328,91 @@ public class FicherosYExcepciones {
         for (Planeta planetas : planetas) {
             for (Ciudadano habitante : planetas.getHabitantes()) {
                 if (habitante.getNombre().equals(nombre)) {
-                    throw new MyException("< ERROR 006: Ya existe un ser censado con ese nombre >");
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
+    public static boolean comprobarEspecies(String especie) {
+        String[] especiesAceptadas = {"Human", "Andorian", "Vulcan", "Nibirian", "Klingon"};
+        for (String especieAceptada : especiesAceptadas) {
+            if (especieAceptada.equalsIgnoreCase(especie)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static void listaPorEspecie(String linea) throws MyException {
 
+        String[] arrayLinea = linea.split(" ");
+        String especie = arrayLinea[1];
+        if (comprobarEspecies(especie)) {
+
+            System.out.println("< POPULATION BY RACE >");
+
+            for (Planeta planeta : planetas) {
+                for (Ciudadano ciudadanos : planeta.getHabitantes()) {
+                    if (ciudadanos.getClass().getSimpleName().equalsIgnoreCase(especie)) {
+
+                        System.out.println(ciudadanos.toString()+"-"+planeta.getNombre());
+
+                    }
+                }
+            }
+
+        } else {
+
+            throw new MyException("< ERROR 002: Especie incorrecta >");
+
+        }
+
+    }
+    public static void guardarHabitante(Ciudadano c, String linea){
+         String[] arrayLinea = linea.split(" ");
+        switch(arrayLinea[2]){
+            case "vulcano":
+                String archivo;
+                Persistencia.escribirEnArchivo(c, archivo="Vulcano.txt");
+                break;
+            case "nibiru":
+                Persistencia.escribirEnArchivo(c, archivo="Nibiru.txt");
+                break;
+            case "kronos":
+                Persistencia.escribirEnArchivo(c, archivo="Kronos.txt");
+                break;
+            case "andoria":
+                Persistencia.escribirEnArchivo(c, archivo="Andoria.txt");
+                break;
+        }
+    }
+    public static void persistencia() {
+        
+            File archivoAndoria = Persistencia.comprobarExistencia("Andoria");
+            File archivoKronos = Persistencia.comprobarExistencia("Kronos");
+            File archivoNibiru = Persistencia.comprobarExistencia("Nibiru");
+            File archivoVulcano = Persistencia.comprobarExistencia("Vulcano");
+            
+            ArrayList<String> habitantesAndoria = Persistencia.leerLineaALinea(archivoAndoria);
+            ArrayList<String> habitantesKronos = Persistencia.leerLineaALinea(archivoKronos);
+            ArrayList<String> habitantesNibiru = Persistencia.leerLineaALinea(archivoNibiru);
+            ArrayList<String> habitantesVulcano = Persistencia.leerLineaALinea(archivoVulcano);
+            
+            
+    }
+    
+    
+//    public static void addHabitantes(ArrayList<String> habitantes) throws MyException {
+//        for (String cadena : habitantes) {
+//            cadena = "c-" + cadena;
+//            String operacion = cadena.replace('-',' ');
+//            tryCiudadano(operacion);
+//        }
+//    }
+    
+    
+    
     // Método que le pases una Especie y un nombre de planeta
     // y aÑADE  una linea al fichero nombreplaneta.txt con los datos de la especie
 }
