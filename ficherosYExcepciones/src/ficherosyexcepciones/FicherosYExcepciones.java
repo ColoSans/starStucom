@@ -33,7 +33,7 @@ public class FicherosYExcepciones {
 
     public static void main(String[] args) {
         crearPlanetas();
-        // cargar los datos de los fichero (leer)
+        // cargar los datos de los fichero (leer)(FALTA)
         persistencia();
         
         try {
@@ -108,7 +108,11 @@ public class FicherosYExcepciones {
         }
     }
 
-    
+    /**
+     * Compruebo si un numero es int
+     * @param dato dato para comprobar si es int
+     * @return 
+     */
     public static boolean isInteger(String dato) {
         try {
 
@@ -126,7 +130,10 @@ public class FicherosYExcepciones {
 
         return true;
     }
-
+/**
+ * Modifica el valor especifico de un ciudadano según su nombre
+ * @param linea linea que introduce el usuario
+ */
     public static void modificar(String linea) {
 
         try {
@@ -180,7 +187,10 @@ public class FicherosYExcepciones {
         }
 
     }
-
+/**
+ * Borra un ciudadano
+ * @param linea linea que introduce el usuario
+ */
     public static void borrarCiudadano(String linea) {
 
         try {
@@ -205,7 +215,9 @@ public class FicherosYExcepciones {
         }
 
     }
-
+/**
+ * Muestro los habiantes ordenados por planetas y por especies
+ */
     public static void listarHabitantes() {
         System.out.println("< POPULATION BY PLANET >");
         Comparator<Ciudadano> comparadorNombre = Comparator.comparing(Ciudadano -> Ciudadano.getClass().getSimpleName());
@@ -221,7 +233,9 @@ public class FicherosYExcepciones {
         }
 
     }
-
+/**
+ * Creo planetas
+ */
     public static void crearPlanetas() {
         Planeta vulcano = new Vulcano("vulcano");
         Planeta andoria = new Andoria("andoria");
@@ -232,7 +246,12 @@ public class FicherosYExcepciones {
         planetas.add(andoria);
         planetas.add(vulcano);
     }
-
+/**
+ * Metodo en el que según la especie que se introduzca, se añade a su arraylist correspondiente.
+ * Aquí invoco los metodos de añadir a ficheros
+ * @param linea linea que introduce el usuario
+ * @throws MyException 
+ */
     public static void tryCiudadano(String linea) throws MyException {
         String[] arrayLinea = linea.split(" ");
         // si comprobarNombre - Lanzas excepcion, ya existe
@@ -305,7 +324,12 @@ public class FicherosYExcepciones {
         }
 
     }
-
+/**
+ * Recojo el planeta que introduce el usuario
+ * @param planeta
+ * @return
+ * @throws MyException 
+ */
     public static Planeta traerPlaneta(String planeta) throws MyException {
         for (int i = 0; i < planetas.size(); i++) {
             if (planeta.equals(planetas.get(i).getNombre())) {
@@ -314,7 +338,12 @@ public class FicherosYExcepciones {
         }
         return null;
     }
-
+/**
+ * Comprueba que exista el planeta
+ * @param planeta nombre del planeta
+ * @return
+ * @throws MyException 
+ */
     public static boolean comprobarPlaneta(String planeta) throws MyException {
         for (int i = 0; i < planetas.size(); i++) {
             if (planeta.equals(planetas.get(i).getNombre())) {
@@ -323,7 +352,12 @@ public class FicherosYExcepciones {
         }
         throw new MyException("< ERROR 003: Planeta incorrecto >");
     }
-
+/**
+ * Compruebo que exista el nombre en los arraylist
+ * @param nombre nombre del ciudadano
+ * @return
+ * @throws MyException 
+ */
     public static boolean comprobarNombre(String nombre) throws MyException {
         for (Planeta planetas : planetas) {
             for (Ciudadano habitante : planetas.getHabitantes()) {
@@ -334,6 +368,11 @@ public class FicherosYExcepciones {
         }
         return false;
     }
+    /**
+     * Metodo en el que compruebo que la especie exista
+     * @param especie especia
+     * @return 
+     */
     public static boolean comprobarEspecies(String especie) {
         String[] especiesAceptadas = {"Human", "Andorian", "Vulcan", "Nibirian", "Klingon"};
         for (String especieAceptada : especiesAceptadas) {
@@ -343,7 +382,11 @@ public class FicherosYExcepciones {
         }
         return false;
     }
-    
+    /**
+     * Metodo en el que listo los ciudadanos dependiendo de la especie
+     * @param linea linea que introduce el usuario
+     * @throws MyException 
+     */
     public static void listaPorEspecie(String linea) throws MyException {
 
         String[] arrayLinea = linea.split(" ");
@@ -369,6 +412,11 @@ public class FicherosYExcepciones {
         }
 
     }
+    /**
+     * Metodo en el que paso el ciudadano y el nombre del archivo segun el planeta
+     * @param c objeto ciudadano
+     * @param linea linea que introduce el usuario
+     */
     public static void guardarHabitante(Ciudadano c, String linea){
          String[] arrayLinea = linea.split(" ");
         switch(arrayLinea[2]){
