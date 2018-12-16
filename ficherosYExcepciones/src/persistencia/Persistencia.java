@@ -30,23 +30,22 @@ public class Persistencia {
     
     // Escribir un ser en un planeta
     
-    public static ArrayList<String> leerLineaALinea(File archivo){
-        ArrayList<String>lineas =new ArrayList<>();
-            //comprobar que existe
-            if(archivo.exists()){
-                try {
-                    FileReader fr=new FileReader(archivo);
-                    BufferedReader br =new BufferedReader(fr);
-                    String linea;
-                    //leer linea a linea
-                    while((linea = br.readLine())!= null){
-                        lineas.add(linea);
-                    }
-                }  catch (IOException ex) {
-                    System.out.println("Error al leer: "+ ex.getMessage());
+    public static ArrayList<String> leerLineaALinea(File archivo) throws MyException {
+        ArrayList<String> Ciudadanos = new ArrayList<>();
+        try {
+            if (archivo != null) {
+                FileReader fileReader = new FileReader(archivo);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String linia;
+                while ((linia = bufferedReader.readLine()) != null) {
+                    Ciudadanos.add(linia);
                 }
+                bufferedReader.close();
             }
-            return lineas;
+        } catch (IOException ex) {
+
+        }
+        return Ciudadanos;
     }
     
     public static File comprobarExistencia(String nombre) {

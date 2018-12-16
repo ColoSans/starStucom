@@ -442,10 +442,15 @@ public class FicherosYExcepciones {
             File archivoNibiru = Persistencia.comprobarExistencia("Nibiru");
             File archivoVulcano = Persistencia.comprobarExistencia("Vulcano");
             
+        try {
             ArrayList<String> habitantesAndoria = Persistencia.leerLineaALinea(archivoAndoria);
             ArrayList<String> habitantesKronos = Persistencia.leerLineaALinea(archivoKronos);
             ArrayList<String> habitantesNibiru = Persistencia.leerLineaALinea(archivoNibiru);
             ArrayList<String> habitantesVulcano = Persistencia.leerLineaALinea(archivoVulcano);
+        } catch (MyException ex) {
+            Logger.getLogger(FicherosYExcepciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
             
             
     }
