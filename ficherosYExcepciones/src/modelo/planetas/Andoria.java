@@ -15,20 +15,33 @@ import modelo.ciudadanos.Ciudadano;
  */
 public class Andoria extends Planeta{
     private ArrayList<String> noBienvenido = new ArrayList<>();
-
+/**
+ * constructor
+ * @param nombre valor nombre del planeta
+ */
     public Andoria(String nombre) {
         super(nombre);
         this.noBienvenido.add("Vulcan");
     }
-
+/**
+ * devuelve el arraylist de los seres que no pueden habitar en el planeta
+ * @return 
+ */
     public ArrayList<String> getNoBienvenido() {
         return noBienvenido;
     }
-
+/**
+ * modifica elarraylist de los seres que no pueden habitar en el planeta(no lo utilizo pero lo tengo creado por si acaso)
+ * @param noBienvenido 
+ */
     public void setNoBienvenido(ArrayList<String> noBienvenido) {
         this.noBienvenido = noBienvenido;
     }
-    
+    /**
+     * metodo que comprueba que un ciudadano pueda registrarse al planeta
+     * @param c objeto ciudadano
+     * @throws MyException 
+     */
     @Override
      public void comprobarCiudadano(Ciudadano c) throws MyException {
         if(c.getClass().getSimpleName().equalsIgnoreCase("Vulcan")){

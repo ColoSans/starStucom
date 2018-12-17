@@ -16,7 +16,7 @@ public class Nibirian extends Ciudadano {
     private String alimento;
     /**
      * Constructor
-     * @param alimento alimento puede ser true o false
+     * @param alimento alimento puede ser "vegetarian" o "novegetarian"
      * @param nombre  nombre que viene de la clase padre
      */
     public Nibirian(String alimento, String nombre) throws MyException {
@@ -40,7 +40,7 @@ public class Nibirian extends Ciudadano {
 
 /**
      * modifica el valor de alimento
-     * @param alimento
+     * @param alimento el valor tiene que ser "vegetarian" o "novegetarian"
      */
     public void setAlimento(String alimento) throws MyException {
         if(alimento.equalsIgnoreCase("vegetarian")){
@@ -51,6 +51,10 @@ public class Nibirian extends Ciudadano {
             throw new MyException("< ERROR 004: Dato incorrecto >");
         }
     }
+    /**
+     * Devuelve el string indicado
+     * @return 
+     */
     public String toString() {
         return "nibirian-"+ super.toString()+"-"+alimento; 
     }

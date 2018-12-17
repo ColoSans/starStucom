@@ -337,7 +337,7 @@ public class FicherosYExcepciones {
 /**
  * Recojo el planeta que introduce el usuario
  * @param planeta
- * @return
+ * @return devuelve el planeta
  * @throws MyException 
  */
     public static Planeta traerPlaneta(String planeta) throws MyException {
@@ -351,7 +351,7 @@ public class FicherosYExcepciones {
 /**
  * Comprueba que exista el planeta
  * @param planeta nombre del planeta
- * @return
+ * @return comprueba si el planeta existe
  * @throws MyException 
  */
     public static boolean comprobarPlaneta(String planeta) throws MyException {
@@ -365,7 +365,7 @@ public class FicherosYExcepciones {
 /**
  * Compruebo que exista el nombre en los arraylist
  * @param nombre nombre del ciudadano
- * @return
+ * @return comprueba si el nombre ya está registrado
  * @throws MyException 
  */
     public static boolean comprobarNombre(String nombre) throws MyException {
@@ -381,7 +381,7 @@ public class FicherosYExcepciones {
     /**
      * Metodo en el que compruebo que la especie exista
      * @param especie especia
-     * @return 
+     * @return  comprueba si la especie existe
      */
     public static boolean comprobarEspecies(String especie) {
         String[] especiesAceptadas = {"Human", "Andorian", "Vulcan", "Nibirian", "Klingon"};
@@ -445,6 +445,9 @@ public class FicherosYExcepciones {
                 break;
         }
     }
+    /**
+     * Metodo donde creo los ficheros y cargo todos sus datos en arraylists segun el planeta
+     */
     public static void persistencia() {
         
             File archivoAndoria = Persistencia.comprobarExistencia("Andoria");
@@ -465,6 +468,11 @@ public class FicherosYExcepciones {
             
             
     }
+    /**
+     * Metodo en el que añado los datos de los arraylists en los que he metido la información de los ficheros a los arraylists de cada planeta
+     * @param planeta
+     * @param habitantes 
+     */
     public static void meterEnPlaneta(Planeta planeta,  ArrayList<String> habitantes){
         if(habitantes.size()==0){
             if(planeta.equals(habitantes)){

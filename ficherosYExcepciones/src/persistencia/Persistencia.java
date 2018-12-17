@@ -29,7 +29,12 @@ public class Persistencia {
     
     
     // Escribir un ser en un planeta
-    
+    /**
+     * Lee linea a linea el archivo que le pasas y añade las lineas en un arraylist
+     * @param archivo archivo
+     * @return
+     * @throws MyException 
+     */
     public static ArrayList<String> leerLineaALinea(File archivo) throws MyException {
         ArrayList<String> Ciudadanos = new ArrayList<>();
         try {
@@ -49,7 +54,11 @@ public class Persistencia {
         }
         return Ciudadanos;
     }
-    
+    /**
+     * Comprueba que que un fichero existe, si no, lo crea.
+     * @param nombre nombre del fichero
+     * @return 
+     */
     public static File comprobarExistencia(String nombre) {
         try {
             String rutaFichero = nombre + ".txt";

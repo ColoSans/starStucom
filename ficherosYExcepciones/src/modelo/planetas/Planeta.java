@@ -37,14 +37,25 @@ public class Planeta {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    /**
+     * Metodo que uso en algunas de las clases hijas en las que hago override del mismo para comprobar si un ser puede habitar en un planeta o no
+     * @param c objeto ciudadano
+     * @throws MyException 
+     */
     public void comprobarCiudadano(Ciudadano c) throws MyException {
         
     }
+    /**
+     * devuelve el arraylist del planeta
+     * @return 
+     */
     public ArrayList<Ciudadano> getHabitantes() {
         return habitantes;
     }
-
+/**
+ * modificar el arraylist habitantes
+ * @param habitantes  arraylist habitantes
+ */
     public void setHabitantes(ArrayList<Ciudadano> habitantes) {
         this.habitantes = habitantes;
     }

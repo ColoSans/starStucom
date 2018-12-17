@@ -13,7 +13,12 @@ import exceptions.MyException;
  */
 public class Andorian extends Ciudadano  {
     private String aenar;
-
+/**
+ * Constructor
+ * @param aenar valor propio de la especie solo puede ser "aenar" o "noaenar"
+ * @param nombre nombre del ser heredado de la clase madre
+ * @throws MyException 
+ */
     public Andorian (String aenar, String nombre)throws MyException {
         
         super(nombre);
@@ -26,11 +31,18 @@ public class Andorian extends Ciudadano  {
         }
         
     }
-
+/**
+ * Devuelve el valor aenar
+ * @return 
+ */
     public String getAenar() {
         return aenar;
     }
-
+/**
+ * Sirve para modifiacar el valor aenar, solo puede ser "aenar" o "noaenar"
+ * @param aenar valor aenar
+ * @throws MyException 
+ */
     public void setAenar(String aenar) throws MyException{
         if(aenar.equalsIgnoreCase("aenar")){
             this.aenar = aenar;
@@ -40,6 +52,10 @@ public class Andorian extends Ciudadano  {
             throw new MyException("< ERROR 004: Dato incorrecto >");
         }
     }
+    /**
+     * Devuelve el string indicado
+     * @return 
+     */
     public String toString() {
         return "andorian-"+ super.toString()+"-"+aenar; 
     }

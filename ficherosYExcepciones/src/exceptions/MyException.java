@@ -10,7 +10,10 @@ package exceptions;
  * @author marcc
  */
 public class MyException extends Exception{
-    
+    /**
+     * Creación de la excepción
+     * @param message 
+     */
     public MyException(String message) {
         super(message);
     }
