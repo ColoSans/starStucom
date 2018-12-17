@@ -38,6 +38,8 @@ public class Persistencia {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String linia;
                 while ((linia = bufferedReader.readLine()) != null) {
+                    
+                    System.out.println(linia);
                     Ciudadanos.add(linia);
                 }
                 bufferedReader.close();

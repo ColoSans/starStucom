@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
- /*dsadsa*/
 package ficherosyexcepciones;
 
 import exceptions.MyException;
@@ -259,15 +253,20 @@ public class FicherosYExcepciones {
 
             switch (arrayLinea[1]) {
                 case "vulcan":
-                    int meditacion = Integer.parseInt(arrayLinea[4]);
                     if (comprobarPlaneta(arrayLinea[2])) {
-                        Vulcan v = new Vulcan(meditacion, arrayLinea[3]);
-                        Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
-                        traerPlaneta.comprobarCiudadano(v);
-                        traerPlaneta.getHabitantes().add(v);
-                        guardarHabitante(v, linea);// Guardar en fichero
+                        if(isInteger(arrayLinea[4])){
+                            int meditacion = Integer.parseInt(arrayLinea[4]);
+                            Vulcan v = new Vulcan(meditacion, arrayLinea[3]);
+                            Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
+                            traerPlaneta.comprobarCiudadano(v);
+                            traerPlaneta.getHabitantes().add(v);
+                            guardarHabitante(v, linea);// Guardar en fichero
                         
                         System.out.println("< OK: Ser censado correctamente en el planeta >");
+                        }else{
+                            System.out.println("< ERROR 004: Dato incorrecto >");
+                        }
+                        
                     }
                     break;
                 case "nibirian":
@@ -296,17 +295,23 @@ public class FicherosYExcepciones {
                     break;
                 case "human":
                     if (comprobarPlaneta(arrayLinea[2])) {
-                        Human h = new Human(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
+                        if(isInteger(arrayLinea[4])){
+                            Human h = new Human(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
                         Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
                         traerPlaneta.comprobarCiudadano(h);
                         guardarHabitante(h, linea);// Guardar en fichero
                         traerPlaneta.getHabitantes().add(h);
                         
                         System.out.println("< OK: Ser censado correctamente en el planeta >");
+                        }else{
+                            System.out.println("< ERROR 004: Dato incorrecto >");
+                        }
+                        
                     }
                     break;
                 case "klingon":
                     if (comprobarPlaneta(arrayLinea[2])) {
+                        if(isInteger(arrayLinea[4])){
                         Klingon k = new Klingon(Integer.parseInt(arrayLinea[4]), arrayLinea[3]);
                         Planeta traerPlaneta = traerPlaneta(arrayLinea[2]);
                         traerPlaneta.comprobarCiudadano(k);
@@ -314,6 +319,11 @@ public class FicherosYExcepciones {
                         traerPlaneta.getHabitantes().add(k);
                         
                         System.out.println("< OK: Ser censado correctamente en el planeta >");
+                        }else{
+                            System.out.println("< ERROR 004: Dato incorrecto >");
+                        }
+                        
+                       
                     }
                     break;
                 default:
@@ -443,10 +453,11 @@ public class FicherosYExcepciones {
             File archivoVulcano = Persistencia.comprobarExistencia("Vulcano");
             
         try {
-            ArrayList<String> habitantesAndoria = Persistencia.leerLineaALinea(archivoAndoria);
-            ArrayList<String> habitantesKronos = Persistencia.leerLineaALinea(archivoKronos);
-            ArrayList<String> habitantesNibiru = Persistencia.leerLineaALinea(archivoNibiru);
-            ArrayList<String> habitantesVulcano = Persistencia.leerLineaALinea(archivoVulcano);
+            ArrayList<String> andoria = Persistencia.leerLineaALinea(archivoAndoria);
+            ArrayList<String> kronos = Persistencia.leerLineaALinea(archivoKronos);
+            ArrayList<String> nibiru = Persistencia.leerLineaALinea(archivoNibiru);
+            ArrayList<String> vulcano = Persistencia.leerLineaALinea(archivoVulcano);
+            
         } catch (MyException ex) {
             Logger.getLogger(FicherosYExcepciones.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -454,7 +465,15 @@ public class FicherosYExcepciones {
             
             
     }
-    
+    public static void meterEnPlaneta(Planeta planeta,  ArrayList<String> habitantes){
+        if(habitantes.size()==0){
+            if(planeta.equals(habitantes)){
+                
+            }
+        }else{
+            
+        }
+    }
     
 //    public static void addHabitantes(ArrayList<String> habitantes) throws MyException {
 //        for (String cadena : habitantes) {
