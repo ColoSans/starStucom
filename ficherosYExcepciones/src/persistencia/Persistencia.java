@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ciudadanos.Ciudadano;
-import modelo.ciudadanos.Vulcan;
+import modelo.ciudadanos.*;
 
 /**
  *
@@ -35,8 +35,8 @@ public class Persistencia {
      * @return
      * @throws MyException 
      */
-    public static ArrayList<String> leerLineaALinea(File archivo) throws MyException {
-        ArrayList<String> Ciudadanos = new ArrayList<>();
+    public static ArrayList<Ciudadano> leerLineaALinea(File archivo) throws MyException {
+        ArrayList<Ciudadano> ciudadanos = new ArrayList<>();
         try {
             if (archivo != null) {
                 FileReader fileReader = new FileReader(archivo);
@@ -44,15 +44,34 @@ public class Persistencia {
                 String linia;
                 while ((linia = bufferedReader.readLine()) != null) {
                     
-                    System.out.println(linia);
-                    Ciudadanos.add(linia);
+                    // Conviertes linia en ciudadano
+                    String[] datos = linia.split("-");
+                    switch (datos[0]) {
+                        case "vulcan":
+                            Vulcan v = new Vulcan(Integer.parseInt(datos[2]),datos[1]);
+                            ciudadanos.add(v);
+                            break;
+                        case "nibirian":
+                            Nibirian n = new Nibirian(datos[2],datos[1]);
+                            ciudadanos.add(n);
+                            break;
+                        case "klingon":
+                            Klingon k = new Klingon(Integer.parseInt(datos[2]),datos[1]);
+                            ciudadanos.add(k);
+                            break;
+                        case "andorian":
+                            Andorian a = new Andorian(datos[2],datos[1]);
+                            ciudadanos.add(a);
+                            break;
+                    }
+                    
                 }
                 bufferedReader.close();
             }
         } catch (IOException ex) {
 
         }
-        return Ciudadanos;
+        return ciudadanos;
     }
     /**
      * Comprueba que que un fichero existe, si no, lo crea.

@@ -456,17 +456,17 @@ public class FicherosYExcepciones {
             File archivoVulcano = Persistencia.comprobarExistencia("Vulcano");
             
         try {
-            ArrayList<String> andoria = Persistencia.leerLineaALinea(archivoAndoria);
-            ArrayList<String> kronos = Persistencia.leerLineaALinea(archivoKronos);
-            ArrayList<String> nibiru = Persistencia.leerLineaALinea(archivoNibiru);
-            ArrayList<String> vulcano = Persistencia.leerLineaALinea(archivoVulcano);
-            
+            ArrayList<Ciudadano> andoria = Persistencia.leerLineaALinea(archivoAndoria);
+            planetas.get(2).setHabitantes(andoria);
+            ArrayList<Ciudadano> kronos = Persistencia.leerLineaALinea(archivoKronos);
+            planetas.get(1).setHabitantes(kronos);
+            ArrayList<Ciudadano> nibiru = Persistencia.leerLineaALinea(archivoNibiru);
+            planetas.get(0).setHabitantes(nibiru);
+            ArrayList<Ciudadano> vulcano = Persistencia.leerLineaALinea(archivoVulcano);
+            planetas.get(3).setHabitantes(vulcano);
         } catch (MyException ex) {
             Logger.getLogger(FicherosYExcepciones.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            
-            
+        }    
     }
     /**
      * Metodo en el que añado los datos de los arraylists en los que he metido la información de los ficheros a los arraylists de cada planeta
@@ -496,3 +496,4 @@ public class FicherosYExcepciones {
     // Método que le pases una Especie y un nombre de planeta
     // y aÑADE  una linea al fichero nombreplaneta.txt con los datos de la especie
 }
+
